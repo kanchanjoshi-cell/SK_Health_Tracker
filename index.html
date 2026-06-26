@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SK Health Tracker</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="app-container">
+        <header>
+            <h1>SK Health Tracker 🌿</h1>
+            <p>Your personalized fitness & medical companion</p>
+        </header>
+
+        <section class="card active-page" id="page-account">
+            <h2>👤 Create Your Account</h2>
+            <form id="account-form">
+                <div class="form-group">
+                    <label for="username">Your Name:</label>
+                    <input type="text" id="username" placeholder="e.g. Sam" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email Address:</label>
+                    <input type="email" id="email" placeholder="name@example.com" required>
+                </div>
+                <button type="button" class="btn-primary" onclick="goToPage2()">Create Account & Proceed ➡️</button>
+            </form>
+        </section>
+
+        <section class="card hidden-page" id="page-metrics">
+            <h2>⚙️ Welcome, <span id="user-greeting">User</span>! Set Your Health Goals</h2>
+            <form id="setup-form">
+                <div class="form-group">
+                    <label for="goal">Your Main Goal:</label>
+                    <select id="goal" required>
+                        <option value="gain">Weight Gain (Bulking / Healthy Surplus)</option>
+                        <option value="lose">Weight Loss (Shredding / Deficit)</option>
+                        <option value="maintain">Maintain Current Health Structure</option>
+                    </select>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="current-weight">Current Weight (kg):</label>
+                        <input type="number" id="current-weight" value="40" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="target-weight">Target Weight (kg):</label>
+                        <input type="number" id="target-weight" value="52" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="height">Height (cm):</label>
+                        <input type="number" id="height" placeholder="e.g. 165" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="age">Age:</label>
+                        <input type="number" id="age" placeholder="e.g. 22" required>
+                    </div>
+                </div>
+
+                <button type="button" class="btn-primary" onclick="goToPage3()">Generate Tracker Dashboard 📊</button>
+            </form>
+        </section>
+
+        <div id="page-dashboard" class="hidden-page">
+            
+            <section class="card">
+                <h2>📋 Your Daily Calorie & Nutrient Needs</h2>
+                <div class="targets-grid">
+                    <div class="target-box calories">
+                        <h3 id="target-calories">0</h3>
+                        <p>Calories (kcal)</p>
+                    </div>
+                    <div class="target-box carbs">
+                        <h3 id="target-carbs">0g</h3>
+                        <p>Carbohydrates</p>
+                    </div>
+                    <div class="target-box protein">
+                        <h3 id="target-protein">0g</h3>
+                        <p>Protein</p>
+                    </div>
+                    <div class="target-box fats">
+                        <h3 id="target-fats">0g</h3>
+                        <p>Fats</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="card">
+                <h2>📝 Everyday Progress Updater</h2>
+                <form id="log-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="log-weight">Today's Weight (kg):</label>
+                            <input type="number" id="log-weight" step="0.1" placeholder="e.g. 40.5">
+                        </div>
+                        <div class="form-group">
+                            <label for="log-bp">Blood Pressure (mmHg):</label>
+                            <input type="text" id="log-bp" placeholder="e.g. 120/80">
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="log-calories">Calories Eaten Today:</label>
+                            <input type="number" id="log-calories" placeholder="e.g. 2100">
+                        </div>
+                        <div class="form-group">
+                            <label for="log-water">Water Intake (ml):</label>
+                            <input type="number" id="log-water" placeholder="e.g. 2500">
+                        </div>
+                    </div>
+
+                    <button type="button" class="btn-success" onclick="logDailyStats()">Save Today's Progress Entry</button>
+                </form>
+
+                <div class="history-box">
+                    <h3>📊 Tracked History Log</h3>
+                    <ul id="history-list">
+                        </ul>
+                </div>
+            </section>
+        </div>
+
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
