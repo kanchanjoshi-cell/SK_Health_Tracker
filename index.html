@@ -5,6 +5,107 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SK Health Tracker</title>
     <link rel="stylesheet" href="style.css">
+    
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+    
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    
+    <style>
+        /* Premium Tactical Cardio Interface Grid Rules */
+        .cardio-panel {
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+            border: 1px solid #38bdf8;
+            box-shadow: 0 0 15px rgba(56, 189, 248, 0.15);
+            position: relative;
+            overflow: hidden;
+        }
+        #cardio-map {
+            width: 100%;
+            height: 290px;
+            background-color: #0b0f19;
+            border-radius: 14px;
+            margin-top: 15px;
+            border: 1px solid #334155;
+            box-shadow: inset 0 0 20px rgba(0,0,0,0.6);
+            z-index: 1; /* Essential override layout anchor layering for leaflet popups */
+        }
+        .cardio-stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin-top: 15px;
+        }
+        .cardio-stat-node {
+            background: rgba(15, 23, 42, 0.6);
+            padding: 12px;
+            border-radius: 10px;
+            text-align: center;
+            border: 1px solid #334155;
+            transition: all 0.3s ease;
+        }
+        .cardio-stat-node.active-glow {
+            border-color: #38bdf8;
+            box-shadow: 0 0 10px rgba(56, 189, 248, 0.1);
+        }
+        .cardio-stat-node h4 { 
+            margin: 0; 
+            color: #38bdf8; 
+            font-size: 1.4rem; 
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+        .cardio-stat-node p { 
+            margin: 4px 0 0 0; 
+            font-size: 0.75rem; 
+            color: #94a3b8; 
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .btn-cardio-ctrl {
+            font-family: inherit;
+            font-weight: 600;
+            font-size: 0.95rem;
+            padding: 14px;
+            border-radius: 10px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 15px;
+            border: none;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        .btn-cardio-ctrl.state-start {
+            background: linear-gradient(90deg, #0ea5e9, #2563eb);
+            color: white;
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+        }
+        .btn-cardio-ctrl.state-start:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 16px rgba(37, 99, 235, 0.4);
+        }
+        .btn-cardio-ctrl.state-stop {
+            background: linear-gradient(90deg, #ef4444, #dc2626);
+            color: white;
+            box-shadow: 0 4px 12px rgba(220, 38, 38, 0.3);
+            animation: pulse-border 2s infinite;
+        }
+        @keyframes pulse-border {
+            0% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4); }
+            70% { box-shadow: 0 0 0 10px rgba(239, 68, 68, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
+        }
+        
+        /* Dark Theme Tile Styling Hacks for Free Maps */
+        .leaflet-tile-container img {
+            filter: brightness(0.6) invert(1) contrast(3) hue-rotate(200deg) saturate(0.3) !important;
+        }
+        .leaflet-container {
+            background: #0f172a !important;
+        }
+    </style>
 </head>
 <body>
 
@@ -80,9 +181,6 @@
                             <label><input type="checkbox" value="💪 Bicep Day"> 💪 Bicep Day</label>
                             <label><input type="checkbox" value="🧱 Abs Day"> 🧱 Abs Day</label>
                             <label><input type="checkbox" value="🍗 Leg Day"> 🍗 Leg Day</label>
-                            <label><input type="checkbox" value="🦅 Shoulder Day"> 🦅 Shoulder Day</label>
-                            <label><input type="checkbox" value="⚡ Tricep Day"> ⚡ Tricep Day</label>
-                            <label><input type="checkbox" value="💤 Recovery Day"> 💤 Recovery Day</label>
                         </div>
                     </div>
                 </div>
@@ -96,9 +194,6 @@
                             <label><input type="checkbox" value="💪 Bicep Day"> 💪 Bicep Day</label>
                             <label><input type="checkbox" value="🧱 Abs Day"> 🧱 Abs Day</label>
                             <label><input type="checkbox" value="🍗 Leg Day"> 🍗 Leg Day</label>
-                            <label><input type="checkbox" value="🦅 Shoulder Day"> 🦅 Shoulder Day</label>
-                            <label><input type="checkbox" value="⚡ Tricep Day"> ⚡ Tricep Day</label>
-                            <label><input type="checkbox" value="💤 Recovery Day"> 💤 Recovery Day</label>
                         </div>
                     </div>
                 </div>
@@ -112,9 +207,6 @@
                             <label><input type="checkbox" value="💪 Bicep Day"> 💪 Bicep Day</label>
                             <label><input type="checkbox" value="🧱 Abs Day"> 🧱 Abs Day</label>
                             <label><input type="checkbox" value="🍗 Leg Day"> 🍗 Leg Day</label>
-                            <label><input type="checkbox" value="🦅 Shoulder Day"> 🦅 Shoulder Day</label>
-                            <label><input type="checkbox" value="⚡ Tricep Day"> ⚡ Tricep Day</label>
-                            <label><input type="checkbox" value="💤 Recovery Day"> 💤 Recovery Day</label>
                         </div>
                     </div>
                 </div>
@@ -128,9 +220,6 @@
                             <label><input type="checkbox" value="💪 Bicep Day"> 💪 Bicep Day</label>
                             <label><input type="checkbox" value="🧱 Abs Day"> 🧱 Abs Day</label>
                             <label><input type="checkbox" value="🍗 Leg Day"> 🍗 Leg Day</label>
-                            <label><input type="checkbox" value="🦅 Shoulder Day"> 🦅 Shoulder Day</label>
-                            <label><input type="checkbox" value="⚡ Tricep Day"> ⚡ Tricep Day</label>
-                            <label><input type="checkbox" value="💤 Recovery Day"> 💤 Recovery Day</label>
                         </div>
                     </div>
                 </div>
@@ -144,9 +233,6 @@
                             <label><input type="checkbox" value="💪 Bicep Day"> 💪 Bicep Day</label>
                             <label><input type="checkbox" value="🧱 Abs Day"> 🧱 Abs Day</label>
                             <label><input type="checkbox" value="🍗 Leg Day"> 🍗 Leg Day</label>
-                            <label><input type="checkbox" value="🦅 Shoulder Day"> 🦅 Shoulder Day</label>
-                            <label><input type="checkbox" value="⚡ Tricep Day"> ⚡ Tricep Day</label>
-                            <label><input type="checkbox" value="💤 Recovery Day"> 💤 Recovery Day</label>
                         </div>
                     </div>
                 </div>
@@ -160,9 +246,6 @@
                             <label><input type="checkbox" value="💪 Bicep Day"> 💪 Bicep Day</label>
                             <label><input type="checkbox" value="🧱 Abs Day"> 🧱 Abs Day</label>
                             <label><input type="checkbox" value="🍗 Leg Day"> 🍗 Leg Day</label>
-                            <label><input type="checkbox" value="🦅 Shoulder Day"> 🦅 Shoulder Day</label>
-                            <label><input type="checkbox" value="⚡ Tricep Day"> ⚡ Tricep Day</label>
-                            <label><input type="checkbox" value="💤 Recovery Day"> 💤 Recovery Day</label>
                         </div>
                     </div>
                 </div>
@@ -176,9 +259,6 @@
                             <label><input type="checkbox" value="💪 Bicep Day"> 💪 Bicep Day</label>
                             <label><input type="checkbox" value="🧱 Abs Day"> 🧱 Abs Day</label>
                             <label><input type="checkbox" value="🍗 Leg Day"> 🍗 Leg Day</label>
-                            <label><input type="checkbox" value="🦅 Shoulder Day"> 🦅 Shoulder Day</label>
-                            <label><input type="checkbox" value="⚡ Tricep Day"> ⚡ Tricep Day</label>
-                            <label><input type="checkbox" value="💤 Recovery Day"> 💤 Recovery Day</label>
                         </div>
                     </div>
                 </div>
@@ -201,6 +281,42 @@
                     <button class="btn-action-skip" onclick="markWorkoutState('Skipped')">❌ Skip Workout</button>
                 </div>
                 <div id="routine-status-feedback" class="status-feedback-text"></div>
+            </section>
+
+            <section class="card cardio-panel">
+                <h2>🛰️ Real-Time GPS Cardio Analytics</h2>
+                <div class="form-group">
+                    <label for="cardio-type" style="color: #94a3b8;">Select Session Mode:</label>
+                    <select id="cardio-type" style="background: #0f172a; border-color: #334155; color:#fff;">
+                        <option value="walking">🚶‍♂️ Outdoor Walking / Running Track</option>
+                        <option value="cycling">🚴‍♂️ Speed Cycling / Multi-Gear Outdoor</option>
+                    </select>
+                </div>
+
+                <div id="cardio-map"></div>
+
+                <div class="cardio-stats-grid">
+                    <div class="cardio-stat-node active-glow">
+                        <h4 id="cardio-distance">0.00 km</h4>
+                        <p>Total Distance</p>
+                    </div>
+                    <div class="cardio-stat-node active-glow">
+                        <h4 id="cardio-speed">0.0 km/h</h4>
+                        <p>Live Velocity</p>
+                    </div>
+                    <div class="cardio-stat-node">
+                        <h4 id="cardio-duration">00:00</h4>
+                        <p>Active Clock</p>
+                    </div>
+                    <div class="cardio-stat-node">
+                        <h4 id="cardio-burned">0 kcal</h4>
+                        <p>Energy Cleared</p>
+                    </div>
+                </div>
+
+                <button type="button" id="btn-toggle-cardio" class="btn-cardio-ctrl state-start" onclick="toggleCardioTracking()">
+                    ⚡ Initialize Live Tracking
+                </button>
             </section>
 
             <section class="card">
