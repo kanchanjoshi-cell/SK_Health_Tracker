@@ -118,6 +118,42 @@ input:focus, select:focus { border-color: #38bdf8; }
     font-weight: bold;
 }
 
+.multi-select{
+    position:relative;
+    width:100%;
+}
+
+.select-box{
+    border:1px solid #ccc;
+    padding:10px;
+    border-radius:8px;
+    cursor:pointer;
+    background:#240256;
+}
+
+.checkbox-list{
+    display:none;
+    position:absolute;
+    width:100%;
+    background:white;
+    border:1px solid #ccc;
+    border-radius:8px;
+    max-height:220px;
+    overflow-y:auto;
+    z-index:1000;
+    padding:10px;
+}
+
+.checkbox-list label{
+    display:block;
+    margin:8px 0;
+    cursor:pointer;
+}
+
+.checkbox-list.show{
+    display:block;
+}
+
 /* --- Target System Visual Boxes --- */
 .targets-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
 .target-box { background-color: #0f172a; padding: 15px; border-radius: 12px; text-align: center; border-left: 5px solid #38bdf8; }

@@ -34,7 +34,7 @@
             <form id="setup-form">
                 <div class="form-group">
                     <label for="goal">Your Main Goal:</label>
-                    <select id="goal" required>
+                    <select id="goal">
                         <option value="gain">Weight Gain (Bulking / Healthy Surplus)</option>
                         <option value="lose">Weight Loss (Shredding / Deficit)</option>
                         <option value="maintain">Maintain Current Health Structure</option>
@@ -69,133 +69,124 @@
 
         <section class="card hidden-page" id="page-schedule">
             <h2>🗓️ Build Your Weekly Split</h2>
-            <p style="color: #94a3b8; font-size: 0.9rem; margin-bottom: 20px;">Map out what muscle focus group you train on each calendar day:</p>
             <form id="schedule-form">
                 <div class="form-row-schedule">
                     <label>Monday:</label>
-                    <select id="sched-monday">
-                        <option value="Chest Day">🛡️ Chest Day</option>
-                        <option value="Back Day" selected>📐 Back Day</option>
-                        <option value="Bicep Day">💪 Bicep Day</option>
-                        <option value="Abs Day">🧱 Abs Day</option>
-                        <option value="Leg Day">🍗 Leg Day</option>
-                        <option value="Shoulder Day">🦅 Shoulder Day</option>
-                        <option value="Tricep Day">⚡ Tricep Day</option>
-                        <option value="Recovery Day">💤 Recovery Day</option>
-                        <option value="Chest Day">🛡️ Chest, Shoulders & Triceps</option>
-                        <option value="Back Day">📐 Back & Biceps (Pull)</option>
-                        <option value="Leg Day">🍗 Leg Day Focus</option>
-                        <option value="Rest Day" selected>💤 Rest & Recovery</option>
-                    </select>
+                    <div class="multi-select" id="sched-monday">
+                        <div class="select-box">Select Focus Groups</div>
+                        <div class="checkbox-list">
+                            <label><input type="checkbox" value="🛡️ Chest Day"> 🛡️ Chest Day</label>
+                            <label><input type="checkbox" value="📐 Back Day"> 📐 Back Day</label>
+                            <label><input type="checkbox" value="💪 Bicep Day"> 💪 Bicep Day</label>
+                            <label><input type="checkbox" value="🧱 Abs Day"> 🧱 Abs Day</label>
+                            <label><input type="checkbox" value="🍗 Leg Day"> 🍗 Leg Day</label>
+                            <label><input type="checkbox" value="🦅 Shoulder Day"> 🦅 Shoulder Day</label>
+                            <label><input type="checkbox" value="⚡ Tricep Day"> ⚡ Tricep Day</label>
+                            <label><input type="checkbox" value="💤 Recovery Day"> 💤 Recovery Day</label>
+                        </div>
+                    </div>
                 </div>
                 <div class="form-row-schedule">
                     <label>Tuesday:</label>
-                    <select id="sched-tuesday">
-                        <option value="Chest Day">🛡️ Chest Day</option>
-                        <option value="Back Day" selected>📐 Back Day</option>
-                        <option value="Bicep Day">💪 Bicep Day</option>
-                        <option value="Abs Day">🧱 Abs Day</option>
-                        <option value="Leg Day">🍗 Leg Day</option>
-                        <option value="Shoulder Day">🦅 Shoulder Day</option>
-                        <option value="Tricep Day">⚡ Tricep Day</option>
-                        <option value="Recovery Day">💤 Recovery Day</option>
-                        <option value="Chest Day">🛡️ Chest, Shoulders & Triceps</option>
-                        <option value="Back Day" selected>📐 Back & Biceps (Pull)</option>
-                        <option value="Leg Day">🍗 Leg Day Focus</option>
-                        <option value="Rest Day">💤 Rest & Recovery</option>
-                    </select>
+                    <div class="multi-select" id="sched-tuesday">
+                        <div class="select-box">Select Focus Groups</div>
+                        <div class="checkbox-list">
+                            <label><input type="checkbox" value="🛡️ Chest Day"> 🛡️ Chest Day</label>
+                            <label><input type="checkbox" value="📐 Back Day"> 📐 Back Day</label>
+                            <label><input type="checkbox" value="💪 Bicep Day"> 💪 Bicep Day</label>
+                            <label><input type="checkbox" value="🧱 Abs Day"> 🧱 Abs Day</label>
+                            <label><input type="checkbox" value="🍗 Leg Day"> 🍗 Leg Day</label>
+                            <label><input type="checkbox" value="🦅 Shoulder Day"> 🦅 Shoulder Day</label>
+                            <label><input type="checkbox" value="⚡ Tricep Day"> ⚡ Tricep Day</label>
+                            <label><input type="checkbox" value="💤 Recovery Day"> 💤 Recovery Day</label>
+                        </div>
+                    </div>
                 </div>
                 <div class="form-row-schedule">
                     <label>Wednesday:</label>
-                    <select id="sched-wednesday">
-                        <option value="Chest Day">🛡️ Chest Day</option>
-                        <option value="Back Day" selected>📐 Back Day</option>
-                        <option value="Bicep Day">💪 Bicep Day</option>
-                        <option value="Abs Day">🧱 Abs Day</option>
-                        <option value="Leg Day">🍗 Leg Day</option>
-                        <option value="Shoulder Day">🦅 Shoulder Day</option>
-                        <option value="Tricep Day">⚡ Tricep Day</option>
-                        <option value="Recovery Day">💤 Recovery Day</option>
-                        <option value="Chest Day">🛡️ Chest, Shoulders & Triceps</option>
-                        <option value="Back Day">📐 Back & Biceps (Pull)</option>
-                        <option value="Leg Day" selected>🍗 Leg Day Focus</option>
-                        <option value="Rest Day">💤 Rest & Recovery</option>
-                    </select>
+                    <div class="multi-select" id="sched-wednesday">
+                        <div class="select-box">Select Focus Groups</div>
+                        <div class="checkbox-list">
+                            <label><input type="checkbox" value="🛡️ Chest Day"> 🛡️ Chest Day</label>
+                            <label><input type="checkbox" value="📐 Back Day"> 📐 Back Day</label>
+                            <label><input type="checkbox" value="💪 Bicep Day"> 💪 Bicep Day</label>
+                            <label><input type="checkbox" value="🧱 Abs Day"> 🧱 Abs Day</label>
+                            <label><input type="checkbox" value="🍗 Leg Day"> 🍗 Leg Day</label>
+                            <label><input type="checkbox" value="🦅 Shoulder Day"> 🦅 Shoulder Day</label>
+                            <label><input type="checkbox" value="⚡ Tricep Day"> ⚡ Tricep Day</label>
+                            <label><input type="checkbox" value="💤 Recovery Day"> 💤 Recovery Day</label>
+                        </div>
+                    </div>
                 </div>
                 <div class="form-row-schedule">
                     <label>Thursday:</label>
-                    <select id="sched-thursday">
-                        <option value="Chest Day">🛡️ Chest Day</option>
-                        <option value="Back Day" selected>📐 Back Day</option>
-                        <option value="Bicep Day">💪 Bicep Day</option>
-                        <option value="Abs Day">🧱 Abs Day</option>
-                        <option value="Leg Day">🍗 Leg Day</option>
-                        <option value="Shoulder Day">🦅 Shoulder Day</option>
-                        <option value="Tricep Day">⚡ Tricep Day</option>
-                        <option value="Recovery Day">💤 Recovery Day</option>
-                        <option value="Chest Day">🛡️ Chest, Shoulders & Triceps</option>
-                        <option value="Back Day">📐 Back & Biceps (Pull)</option>
-                        <option value="Leg Day">🍗 Leg Day Focus</option>
-                        <option value="Rest Day" selected>💤 Rest & Recovery</option>
-                    </select>
+                    <div class="multi-select" id="sched-thursday">
+                        <div class="select-box">Select Focus Groups</div>
+                        <div class="checkbox-list">
+                            <label><input type="checkbox" value="🛡️ Chest Day"> 🛡️ Chest Day</label>
+                            <label><input type="checkbox" value="📐 Back Day"> 📐 Back Day</label>
+                            <label><input type="checkbox" value="💪 Bicep Day"> 💪 Bicep Day</label>
+                            <label><input type="checkbox" value="🧱 Abs Day"> 🧱 Abs Day</label>
+                            <label><input type="checkbox" value="🍗 Leg Day"> 🍗 Leg Day</label>
+                            <label><input type="checkbox" value="🦅 Shoulder Day"> 🦅 Shoulder Day</label>
+                            <label><input type="checkbox" value="⚡ Tricep Day"> ⚡ Tricep Day</label>
+                            <label><input type="checkbox" value="💤 Recovery Day"> 💤 Recovery Day</label>
+                        </div>
+                    </div>
                 </div>
                 <div class="form-row-schedule">
                     <label>Friday:</label>
-                    <select id="sched-friday">
-                        <option value="Chest Day">🛡️ Chest Day</option>
-                        <option value="Back Day" selected>📐 Back Day</option>
-                        <option value="Bicep Day">💪 Bicep Day</option>
-                        <option value="Abs Day">🧱 Abs Day</option>
-                        <option value="Leg Day">🍗 Leg Day</option>
-                        <option value="Shoulder Day">🦅 Shoulder Day</option>
-                        <option value="Tricep Day">⚡ Tricep Day</option>
-                        <option value="Recovery Day">💤 Recovery Day</option>
-                        <option value="Chest Day" selected>🛡️ Chest, Shoulders & Triceps</option>
-                        <option value="Back Day">📐 Back & Biceps (Pull)</option>
-                        <option value="Leg Day">🍗 Leg Day Focus</option>
-                        <option value="Rest Day">💤 Rest & Recovery</option>
-                    </select>
+                    <div class="multi-select" id="sched-friday">
+                        <div class="select-box">Select Focus Groups</div>
+                        <div class="checkbox-list">
+                            <label><input type="checkbox" value="🛡️ Chest Day"> 🛡️ Chest Day</label>
+                            <label><input type="checkbox" value="📐 Back Day"> 📐 Back Day</label>
+                            <label><input type="checkbox" value="💪 Bicep Day"> 💪 Bicep Day</label>
+                            <label><input type="checkbox" value="🧱 Abs Day"> 🧱 Abs Day</label>
+                            <label><input type="checkbox" value="🍗 Leg Day"> 🍗 Leg Day</label>
+                            <label><input type="checkbox" value="🦅 Shoulder Day"> 🦅 Shoulder Day</label>
+                            <label><input type="checkbox" value="⚡ Tricep Day"> ⚡ Tricep Day</label>
+                            <label><input type="checkbox" value="💤 Recovery Day"> 💤 Recovery Day</label>
+                        </div>
+                    </div>
                 </div>
                 <div class="form-row-schedule">
                     <label>Saturday:</label>
-                    <select id="sched-saturday">
-                        <option value="Chest Day">🛡️ Chest Day</option>
-                        <option value="Back Day" selected>📐 Back Day</option>
-                        <option value="Bicep Day">💪 Bicep Day</option>
-                        <option value="Abs Day">🧱 Abs Day</option>
-                        <option value="Leg Day">🍗 Leg Day</option>
-                        <option value="Shoulder Day">🦅 Shoulder Day</option>
-                        <option value="Tricep Day">⚡ Tricep Day</option>
-                        <option value="Recovery Day">💤 Recovery Day</option>
-                        <option value="Chest Day">🛡️ Chest, Shoulders & Triceps</option>
-                        <option value="Back Day">📐 Back & Biceps (Pull)</option>
-                        <option value="Leg Day">🍗 Leg Day Focus</option>
-                        <option value="Rest Day" selected>💤 Rest & Recovery</option>
-                    </select>
+                    <div class="multi-select" id="sched-saturday">
+                        <div class="select-box">Select Focus Groups</div>
+                        <div class="checkbox-list">
+                            <label><input type="checkbox" value="🛡️ Chest Day"> 🛡️ Chest Day</label>
+                            <label><input type="checkbox" value="📐 Back Day"> 📐 Back Day</label>
+                            <label><input type="checkbox" value="💪 Bicep Day"> 💪 Bicep Day</label>
+                            <label><input type="checkbox" value="🧱 Abs Day"> 🧱 Abs Day</label>
+                            <label><input type="checkbox" value="🍗 Leg Day"> 🍗 Leg Day</label>
+                            <label><input type="checkbox" value="🦅 Shoulder Day"> 🦅 Shoulder Day</label>
+                            <label><input type="checkbox" value="⚡ Tricep Day"> ⚡ Tricep Day</label>
+                            <label><input type="checkbox" value="💤 Recovery Day"> 💤 Recovery Day</label>
+                        </div>
+                    </div>
                 </div>
                 <div class="form-row-schedule">
                     <label>Sunday:</label>
-                    <select id="sched-sunday">
-                        <option value="Chest Day">🛡️ Chest Day</option>
-                        <option value="Back Day" selected>📐 Back Day</option>
-                        <option value="Bicep Day">💪 Bicep Day</option>
-                        <option value="Abs Day">🧱 Abs Day</option>
-                        <option value="Leg Day">🍗 Leg Day</option>
-                        <option value="Shoulder Day">🦅 Shoulder Day</option>
-                        <option value="Tricep Day">⚡ Tricep Day</option>
-                        <option value="Recovery Day">💤 Recovery Day</option>
-                        <option value="Chest Day">🛡️ Chest, Shoulders & Triceps</option>
-                        <option value="Back Day">📐 Back & Biceps (Pull)</option>
-                        <option value="Leg Day">🍗 Leg Day Focus</option>
-                        <option value="Rest Day" selected>💤 Rest & Recovery</option>
-                    </select>
+                    <div class="multi-select" id="sched-sunday">
+                        <div class="select-box">Select Focus Groups</div>
+                        <div class="checkbox-list">
+                            <label><input type="checkbox" value="🛡️ Chest Day"> 🛡️ Chest Day</label>
+                            <label><input type="checkbox" value="📐 Back Day"> 📐 Back Day</label>
+                            <label><input type="checkbox" value="💪 Bicep Day"> 💪 Bicep Day</label>
+                            <label><input type="checkbox" value="🧱 Abs Day"> 🧱 Abs Day</label>
+                            <label><input type="checkbox" value="🍗 Leg Day"> 🍗 Leg Day</label>
+                            <label><input type="checkbox" value="🦅 Shoulder Day"> 🦅 Shoulder Day</label>
+                            <label><input type="checkbox" value="⚡ Tricep Day"> ⚡ Tricep Day</label>
+                            <label><input type="checkbox" value="💤 Recovery Day"> 💤 Recovery Day</label>
+                        </div>
+                    </div>
                 </div>
                 <button type="button" class="btn-primary" onclick="saveScheduleAndGoToDashboard()">Save Split & Finish Setup 🚀</button>
             </form>
         </section>
 
         <div id="page-dashboard" class="hidden-page">
-            
             <div id="medical-alert-box" class="alert-banner hidden-page"></div>
 
             <section class="card routine-reminder-card">
@@ -213,15 +204,24 @@
             </section>
 
             <section class="card">
-                <h2>📋 Your Daily Calorie Target</h2>
+                <h2>📋 Your Daily Calorie & Macro Tracker</h2>
                 <div class="targets-grid">
                     <div class="target-box calories">
                         <h3><span id="tracked-calories-display">0</span> / <span id="target-calories">0</span></h3>
-                        <p>Calories Consumed (kcal)</p>
+                        <p>Calories (kcal)</p>
                     </div>
-                    <div class="target-box carbs"><h3 id="target-carbs">0g</h3><p>Carbs Target</p></div>
-                    <div class="target-box protein"><h3 id="target-protein">0g</h3><p>Protein Target</p></div>
-                    <div class="target-box fats"><h3 id="target-fats">0g</h3><p>Fats Target</p></div>
+                    <div class="target-box carbs">
+                        <h3><span id="tracked-carbs-display">0</span>g / <span id="target-carbs">0g</span></h3>
+                        <p>Carbs</p>
+                    </div>
+                    <div class="target-box protein">
+                        <h3><span id="tracked-protein-display">0</span>g / <span id="target-protein">0g</span></h3>
+                        <p>Protein</p>
+                    </div>
+                    <div class="target-box fats">
+                        <h3><span id="tracked-fats-display">0</span>g / <span id="target-fats">0g</span></h3>
+                        <p>Fats</p>
+                    </div>
                 </div>
 
                 <div class="progress-bar-container">
@@ -233,22 +233,22 @@
             </section>
 
             <section class="card">
+                <h2>⚖️ Log Today's Body Weight</h2>
+                <div class="form-row" style="align-items: flex-end;">
+                    <div class="form-group" style="margin-bottom: 0;">
+                        <label for="log-weight-only">Current Weight (kg):</label>
+                        <input type="number" id="log-weight-only" step="0.1" placeholder="Enter updated weight">
+                    </div>
+                    <button type="button" class="btn-primary" onclick="updateCurrentWeightOnly()" style="margin-top: 0; padding: 12px 20px;">Update Weight</button>
+                </div>
+            </section>
+
+            <section class="card">
                 <h2>📝 Everyday Progress Updater</h2>
                 <form id="log-form">
                     <div class="form-row">
                         <div class="form-group">
-                            <label for="log-weight">Today's Weight (kg):</label>
-                            <input type="number" id="log-weight" step="0.1" placeholder="e.g. 40.5">
-                        </div>
-                        <div class="form-group">
-                            <label for="log-bp">Blood Pressure (mmHg):</label>
-                            <input type="text" id="log-bp" placeholder="e.g. 120/80">
-                        </div>
-                    </div>
-
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="log-calories">Calories Eaten Right Now:</label>
+                            <label for="log-calories">Calories Eaten Right Now (kcal):</label>
                             <input type="number" id="log-calories" placeholder="e.g. 450">
                         </div>
                         <div class="form-group">
@@ -257,7 +257,29 @@
                         </div>
                     </div>
 
-                    <button type="button" class="btn-success" onclick="logDailyStats()">Save Today's Progress Entry</button>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="log-carbs">Carbs Eaten (g):</label>
+                            <input type="number" id="log-carbs" placeholder="e.g. 50">
+                        </div>
+                        <div class="form-group">
+                            <label for="log-protein">Protein Eaten (g):</label>
+                            <input type="number" id="log-protein" placeholder="e.g. 25">
+                        </div>
+                        <div class="form-group">
+                            <label for="log-fats">Fats Eaten (g):</label>
+                            <input type="number" id="log-fats" placeholder="e.g. 10">
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group" style="width: 100%;">
+                            <label for="log-bp">Blood Pressure (mmHg): <span style="font-size: 0.8rem; color: #64748b;">(Optional)</span></label>
+                            <input type="text" id="log-bp" placeholder="e.g. 120/80">
+                        </div>
+                    </div>
+
+                    <button type="button" class="btn-success" onclick="logDailyStats()">Save Progress Entry</button>
                 </form>
 
                 <div class="analytics-trends" id="analytics-trends-view">
