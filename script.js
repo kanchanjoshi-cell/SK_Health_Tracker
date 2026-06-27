@@ -8,7 +8,7 @@ let cumulativeCarbsEaten = 0;
 let cumulativeProteinEaten = 0;
 let cumulativeFatsEaten = 0;
 
-// High-Fidelity Leaflet Engine Configurations
+// Geolocation Engine Framework State Variables
 let map = null;
 let pathPolyline = null;
 let userMarker = null;
@@ -20,7 +20,7 @@ let trackedPathCoordinates = [];
 let totalCardioDistanceKm = 0;
 let estimatedCaloriesBurned = 0;
 
-// Seed Fallback Coordinates (New Delhi center base lines)
+// Dynamic default coordinates (Updated automatically on load)
 let virtualLat = 28.6139; 
 let virtualLng = 77.2090;
 
@@ -131,18 +131,23 @@ function checkMedicalWarnings(bpString) {
     }
 }
 
-// 100% FREE LEAFLET ENGINE INITIALIZATION
+// 🌐 100% PRECISE LIVE GEOLOCATION TRACKER
 function initLeafletFreeMap() {
     const mapElement = document.getElementById('cardio-map');
     if (!mapElement || typeof L === 'undefined') return;
 
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(position => {
+            // Set position parameters directly to your exact geolocation coords
             virtualLat = position.coords.latitude;
             virtualLng = position.coords.longitude;
             buildLeafletInstance();
-        }, () => {
+        }, (error) => {
+            console.warn(`Location access denied or failed: ${error.message}. Using safe fallback.`);
             buildLeafletInstance();
+        }, {
+            enableHighAccuracy: true,
+            timeout: 10000
         });
     } else {
         buildLeafletInstance();
@@ -150,13 +155,14 @@ function initLeafletFreeMap() {
 }
 
 function buildLeafletInstance() {
-    // Instantiate free map view grid context
+    // If map instance already exists, prevent re-initialization error
+    if (map) { map.remove(); }
+
     map = L.map('cardio-map', {
         zoomControl: false,
         attributionControl: false
     }).setView([virtualLat, virtualLng], 16);
 
-    // Add high resolution standard street imagery overlay layers for free
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         maxZoom: 19
     }).addTo(map);
@@ -167,7 +173,6 @@ function buildLeafletInstance() {
         opacity: 0.95
     }).addTo(map);
 
-    // Append beautiful minimal neon radar marker tracker pulse node
     userMarker = L.circleMarker([virtualLat, virtualLng], {
         color: '#38bdf8',
         fillColor: '#0ea5e9',
@@ -192,12 +197,16 @@ function toggleCardioTracking() {
         document.getElementById('cardio-speed').innerText = "0.0 km/h";
         document.getElementById('cardio-burned').innerText = "0 kcal";
 
+        // Push initial exact spot to coordinate array
+        trackedPathCoordinates.push([virtualLat, virtualLng]);
+
         cardioTimerInterval = setInterval(updateCardioPipelineDataStream, 1000);
 
         if (navigator.geolocation) {
             geoWatchId = navigator.geolocation.watchPosition(handleGPSMovementSuccess, handleGPSError, {
                 enableHighAccuracy: true,
-                maximumAge: 1000
+                maximumAge: 0,
+                timeout: 5000
             });
         }
     } else {
@@ -223,33 +232,31 @@ function updateCardioPipelineDataStream() {
     
     const activityMode = document.getElementById('cardio-type').value;
     
-    // Smooth Indoor/Stationary Simulation Mode
-    // If you're testing indoors or your coordinates aren't updating rapidly, 
-    // it smoothly calculates real-world metrics based on standard MET equations!
+    // Dynamic Indoor/Desktop Simulator Fallback kicks in only if user remains perfectly static
     if (trackedPathCoordinates.length < 2) {
         let paceSpeedStep = activityMode === 'cycling' ? 0.004 : 0.0012;
         totalCardioDistanceKm += paceSpeedStep;
         
-        virtualLat += (Math.random() - 0.5) * 0.00012;
-        virtualLng += (Math.random() - 0.5) * 0.00012;
+        virtualLat += (Math.random() - 0.5) * 0.00008;
+        virtualLng += (Math.random() - 0.5) * 0.00008;
         
         if (map && pathPolyline && userMarker) {
             pathPolyline.addLatLng([virtualLat, virtualLng]);
             userMarker.setLatLng([virtualLat, virtualLng]);
             map.panTo([virtualLat, virtualLng]);
         }
-
-        const elapsedHrs = (totalSecs / 3600);
-        const calcVelocity = elapsedHrs > 0 ? (totalCardioDistanceKm / elapsedHrs) : 0;
-        const currentWeight = parseFloat(document.getElementById('current-weight').value) || 50;
-        const metRatio = activityMode === 'cycling' ? 8.0 : 4.5;
-        
-        estimatedCaloriesBurned = Math.round(metRatio * currentWeight * elapsedHrs);
-
-        document.getElementById('cardio-distance').innerText = `${totalCardioDistanceKm.toFixed(2)} km`;
-        document.getElementById('cardio-speed').innerText = `${Math.min(calcVelocity, activityMode === 'cycling' ? 20 : 5.5).toFixed(1)} km/h`;
-        document.getElementById('cardio-burned').innerText = `${estimatedCaloriesBurned} kcal`;
     }
+
+    const elapsedHrs = (totalSecs / 3600);
+    const calcVelocity = elapsedHrs > 0 ? (totalCardioDistanceKm / elapsedHrs) : 0;
+    const currentWeight = parseFloat(document.getElementById('current-weight').value) || 50;
+    const metRatio = activityMode === 'cycling' ? 8.0 : 4.5;
+    
+    estimatedCaloriesBurned = Math.round(metRatio * currentWeight * elapsedHrs);
+
+    document.getElementById('cardio-distance').innerText = `${totalCardioDistanceKm.toFixed(2)} km`;
+    document.getElementById('cardio-speed').innerText = `${calcVelocity.toFixed(1)} km/h`;
+    document.getElementById('cardio-burned').innerText = `${estimatedCaloriesBurned} kcal`;
 }
 
 function handleGPSMovementSuccess(position) {
@@ -257,20 +264,32 @@ function handleGPSMovementSuccess(position) {
     const lat = position.coords.latitude;
     const lng = position.coords.longitude;
     
+    // Switch dynamic core tracking fields directly to your actual real-world coords
+    virtualLat = lat;
+    virtualLng = lng;
+    
     let currentSpeedKmh = position.coords.speed ? (position.coords.speed * 3.6) : 0;
 
     if (map && pathPolyline && userMarker) {
         const currentPoint = [lat, lng];
+        
+        // Push actual real precise coordinates to route array
         trackedPathCoordinates.push(currentPoint);
-        pathPolyline.setPath(trackedPathCoordinates);
+        pathPolyline.setLatLngs(trackedPathCoordinates);
         userMarker.setLatLng(currentPoint);
-        map.setView(currentPoint);
+        map.panTo(currentPoint);
 
         if (trackedPathCoordinates.length > 1) {
             const lastPoint = trackedPathCoordinates[trackedPathCoordinates.length - 2];
-            // Haversine direct absolute metric distance delta math algorithm logic
-            const distanceDelta = map.distance(lastPoint, currentPoint) / 1000; // returns meters, convert to km
+            const distanceDelta = map.distance(lastPoint, currentPoint) / 1000; // Output in KM
             totalCardioDistanceKm += distanceDelta;
+        }
+
+        // Calculate actual real speed if GPS API provides it, otherwise calculate fallback delta speed
+        if(currentSpeedKmh <= 0 && cardioStartTime) {
+            const totalSecs = Math.floor((new Date() - cardioStartTime) / 1000);
+            const elapsedHrs = (totalSecs / 3600);
+            currentSpeedKmh = elapsedHrs > 0 ? (totalCardioDistanceKm / elapsedHrs) : 0;
         }
 
         document.getElementById('cardio-distance').innerText = `${totalCardioDistanceKm.toFixed(2)} km`;
@@ -279,7 +298,7 @@ function handleGPSMovementSuccess(position) {
 }
 
 function handleGPSError(err) {
-    console.warn(`GPS Satellite Feed Error code: ${err.message}`);
+    console.warn(`Real-time GPS precision stream warning: ${err.message}`);
 }
 
 function saveCardioSessionToLogs() {
